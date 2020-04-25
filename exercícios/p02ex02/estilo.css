@@ -1,0 +1,84 @@
+body {
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+  color: rgb(50, 50, 50);
+}
+
+.imagem {
+  width: 7%;
+  margin: auto;
+  padding: 30px;
+}
+
+.lixeira {
+
+  background-color: rgb(147, 147, 147);
+  width: 3%;
+  margin: auto;
+  
+}
+
+.lixeira img{
+   width: 100%;
+}
+
+.lixeira button:hover{
+    cursor: pointer;
+}
+
+.texto-fixo {
+  color: rgb(147, 147, 147);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.botoes-respostas {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.botoes-respostas button {
+  border-color: rgb(196, 196, 196);
+  background-color: white;
+  text-align: center;
+  padding: 10px;
+  margin-left: -1;
+  outline: none;
+}
+
+.botoes-respostas button:hover {
+  background-color: rgb(255, 251, 141);
+  cursor: pointer;
+}
+
+.texto-inicial {
+  background-color: white;
+  width: 30%;
+  margin-left: 5%;
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  
+}
+
+.minha-resposta {
+  background-color: white;
+  width: 30%;
+  padding: 5px;
+  margin-left: 60%;
+  margin-bottom: 20px;
+  visibility: hidden;
+  border-radius: 5px;
+}
+
+.resposta-amigo {
+  background-color: white;
+  width: 30%;
+  margin-left: 5%;
+  padding: 5px;
+  margin-bottom: 20px;
+  visibility: hidden;
+  border-radius: 5px;
+}

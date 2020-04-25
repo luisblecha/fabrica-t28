@@ -1,0 +1,28 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>Calculadora HT</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <div class="calculadora">
+        <input type="number" placeholder="Número 1" id="num1">
+        <input type="number" placeholder="Número 2" id="num2">
+        <div class="botoes">
+            <button onclick="realizarOperacao('+')">Somar</button>
+            <button onclick="realizarOperacao('-')">Subtrair</button>
+            <button onclick="realizarOperacao('*')">Multiplicar</button>
+            <button onclick="realizarOperacao('/')">Dividir</button>
+        </div>
+        <div class="limpar"> 
+            <button onclick="limpar()">Limpar</button>
+        </div>
+
+    </div>
+</body>
+
+</html>

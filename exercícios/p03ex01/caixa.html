@@ -1,0 +1,83 @@
+<html lang="pt-br">
+
+<head>
+    <title>Caixa</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <h1>Registro de venda</h1>
+    <form action="" class="formulario">
+        <fieldset>
+            <legend>Dados do Cliente</legend>
+
+            <div>
+                <label for="nome">Nome do cliente:</label>
+                <input type="text" placeholder="Ex: João da Silva" id="nome">
+            </div>
+            <div>
+                <label for="contato">Celular/telefone:</label>
+                <input type="text" placeholder="Ex: (67) 9 9999-9999" id="contato">
+            </div>
+            <div>
+                <label for="cpf">CPF:</label>
+                <input type="text" placeholder="Ex: 999.999.999-99" id="cpf">
+            </div>
+            <div>
+                <label for="compra">Total da compra:</label>
+                <input type="number" placeholder="Ex: 10000" id="compra">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Forma de Pagamento</legend>
+            <div>
+                <input type="radio" name="opcao" value="1">
+                <label for=""> Dinheiro</label>
+            </div>
+            <div>
+                <input type="radio" name="opcao" value="2">
+                <label for="">Cartão de crédito</label>
+            </div>
+            <div>
+                <input type="radio" name="opcao" value="3">
+                <label for="">Cartão de débito</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Parcelamento</legend>
+            <div>
+                <label for="">Quantidade de parcelas</label>
+                <select name="parcelamento" id="parcelamento">
+                    <option value="">Selecione</option>
+                    <option value="1">à vista</option>
+                    <option value="2">2 vezes</option>
+                </select>
+            </div>
+
+        </fieldset>
+
+        <div class="botoes">
+            <button onclick="cancelar()" type="button" class="btn-cancelar">Cancelar</button>
+            <button onclick="salvar()" type="button" class="btn-salvar">Salvar</button>
+        </div>
+        <div class="alerta">
+            <div>
+                <img src="tick.svg" alt="ícone alerta">
+                <p>alerta</p>
+            </div>
+            <div>
+                <img src="close.svg" alt="" onclick="fecharAlerta()">
+            </div>
+        </div>
+
+    </form>
+
+    <pre id="resultado"></pre>
+
+</body>
+
+</html>

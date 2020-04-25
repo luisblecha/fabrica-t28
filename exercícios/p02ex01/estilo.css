@@ -1,0 +1,35 @@
+body {
+  background-color: rgb(253, 253, 253);
+  font-family: sans-serif;
+  color: rgb(59, 59, 59);
+}
+
+.mensagem {
+  text-align: center;
+  width: 30%;
+  margin: 150px auto 50px auto;
+  font-size: 20pt;
+  line-height: 1.5;
+}
+
+.botoes {
+  display: flex;
+  justify-content: center;
+}
+
+.botoes button {
+  font-size: 15pt;
+  background-color: white;
+  padding: 30px;
+  margin-left: -1;
+  outline: none;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
+  cursor: pointer;
+}
+
+.botoes button:active {
+  background-color: lightslategrey;
+  color: white;
+}
