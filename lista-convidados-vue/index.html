@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Convidados Vue</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>{{titulo}}</h1>
+        {{convidado}}
+        <br>
+        {{listaConvidados}}
+        <form>
+            <input type="text" placeholder="Nome" id="nome" v-model="convidado.nome">
+            <input type="number" placeholder="Idade" v-model="convidado.idade">
+            <input type="email" placeholder="E-mail" v-model="convidado.email">
+            <input type="number" placeholder="CEP" v-model="convidado.endereco.cep">
+        </form>
+
+
+        <button @click="salvar">Salvar</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        //instanciando um novo Vue
+        let app = new Vue({
+            el: "#app",
+            data: {
+                titulo: "Lista de Convidados",
+                listaConvidados: [],
+                convidado: { endereco: {}}
+            },
+            methods: {
+                salvar() {
+                    //adicionar o convidado na lista de convidados
+                    this.listaConvidados.push(this.convidado)
+                    this.limpar()
+                },
+
+                limpar(){
+                    this.convidado = {
+                     
+                    }
+                }
+            }
+        })
+
+
+
+
+
+    </script>
+</body>
+
+</html>
