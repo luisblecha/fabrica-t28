@@ -5,28 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Convidados Vue</title>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
 </head>
 
 <body>
 
     <div id="app">
-        <h1>{{titulo}}</h1>
-        {{convidado}}
-        <br>
-        {{listaConvidados}}
-        <form>
-            <input type="text" placeholder="Nome" id="nome" v-model="convidado.nome">
-            <input type="number" placeholder="Idade" v-model="convidado.idade">
-            <input type="email" placeholder="E-mail" v-model="convidado.email">
-            <input type="number" placeholder="CEP" v-model="convidado.endereco.cep">
-        </form>
+        <b-container>
 
+            <h1>{{titulo}}</h1>
 
-        <button @click="salvar">Salvar</button>
+            <form>
+                <b-form-group label="Nome" label-for="nome">
+                    <b-form-input id="nome" v-model="convidado.nome" type="text" placeholder="Ex: João da Silva"
+                        required>
+                    </b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Idade" label-for="idade">
+                    <b-form-input id="idade" v-model="convidado.idade" type="number" placeholder="Ex: 25" required>
+                    </b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Email" label-for="email">
+                    <b-form-input id="email" v-model="convidado.email" type="email" placeholder="Ex: joa@gmail.com"
+                        required>
+                    </b-form-input>
+                </b-form-group>
+
+                <b-form-group label="CEP" label-for="cep">
+                    <b-form-input v-mask="'##.###-###'" id="cep" v-model="convidado.endereco.cep" type="text" placeholder="Ex: 79036100"
+                        required>
+                    </b-form-input>
+                </b-form-group>
+
+                <b-button variant="primary" @click="salvar">Salvar</b-button>
+            </form>
+
+            <b-table striped :items="listaConvidados" :fields="campos"></b-table>
+
+        </b-container>
     </div>
 
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
+
     <script>
+
+        Vue.use(VueMask.VueMaskPlugin) // Faz o atributo v-mask existir
+
 
         //instanciando um novo Vue
         let app = new Vue({
@@ -34,7 +66,29 @@
             data: {
                 titulo: "Lista de Convidados",
                 listaConvidados: [],
-                convidado: { endereco: {}}
+                convidado: { endereco: {} },
+                campos: [
+                    {
+                        label: "Nome",
+                        key: "nome",
+                        sortable: true
+                    },
+                    {
+                        label: "Idade",
+                        key: "idade",
+                        sortable: true
+                    },
+                    {
+                        label: "Email",
+                        key: "email",
+                        sortable: true
+                    },
+                    {
+                        label: "CEP",
+                        key: "endereco.cep",
+                        sortable: true
+                    }
+                ]
             },
             methods: {
                 salvar() {
@@ -43,10 +97,8 @@
                     this.limpar()
                 },
 
-                limpar(){
-                    this.convidado = {
-                     
-                    }
+                limpar() {
+                    this.convidado = { endereco: {} }
                 }
             }
         })
