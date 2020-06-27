@@ -35,17 +35,31 @@
                 </b-form-group>
 
                 <b-form-group label="CEP" label-for="cep">
-                    <b-form-input v-mask="'##.###-###'" id="cep" v-model="convidado.endereco.cep" type="text" placeholder="Ex: 79036100"
-                        required>
+                    <b-form-input v-mask="'##.###-###'" id="cep" v-model="convidado.endereco.cep" type="text"
+                        placeholder="Ex: 79036100" required>
                     </b-form-input>
                 </b-form-group>
 
                 <b-button variant="primary" @click="salvar">Salvar</b-button>
             </form>
 
-            <b-table striped :items="listaConvidados" :fields="campos"></b-table>
+            <b-table striped :items="listaConvidados" :fields="campos">
+                <template v-slot:cell(acoes)="row">
+                    <b-btn variant="outline-primary" @click="editar(row.index)">Editar</b-btn>
+                    <b-btn variant="outline-danger" @click="confirmarRemocao(row.index)">Remover</b-btn>
+                </template>
+            </b-table>
 
         </b-container>
+
+        <b-modal v-model="exibirModalRemocao" title="Confirmar ação" centered>
+            <p>Tem certeza? Esta operação não poderá ser desfeita!</p>
+            <template v-slot:modal-footer="{cancel}">
+                <b-btn @click="remover" variant="danger">Sim, pode remover</b-btn>
+                <b-btn @click="cancel" variant="outline-danger">Cancelar</b-btn>
+            </template>
+        </b-modal>
+
     </div>
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"
@@ -64,6 +78,9 @@
         let app = new Vue({
             el: "#app",
             data: {
+                indiceEdicao:-1,
+                indiceRemocao: -1,
+                exibirModalRemocao: false,
                 titulo: "Lista de Convidados",
                 listaConvidados: [],
                 convidado: { endereco: {} },
@@ -81,24 +98,48 @@
                     {
                         label: "Email",
                         key: "email",
-                        sortable: true
+                        sortable: false
                     },
                     {
                         label: "CEP",
                         key: "endereco.cep",
-                        sortable: true
+                        sortable: false
+                    },
+                    {
+                        label: "Ações",
+                        key: "acoes",
+                        sortable: false
                     }
                 ]
             },
             methods: {
                 salvar() {
                     //adicionar o convidado na lista de convidados
-                    this.listaConvidados.push(this.convidado)
+                    if(this.indiceEdicao > -1){
+                        this.listaConvidados[this.indiceEdicao] = this.convidado
+                        this.listaConvidados.splice(this.indiceEdicao, 1, this.convidado)
+                    }else{
+                        this.listaConvidados.push(this.convidado)
+                    }
                     this.limpar()
+                    
                 },
 
                 limpar() {
                     this.convidado = { endereco: {} }
+                    this.indiceEdicao = -1
+                }, 
+                editar(index){
+                    this.convidado = JSON.parse(JSON.stringify(this.listaConvidados[index]))
+                    this.indiceEdicao = index
+                }, 
+                remover(index){
+                    this.listaConvidados.splice(this.indiceRemocao,1)
+                    this.exibirModalRemocao=false
+                }, 
+                confirmarRemocao(index){
+                    this.indiceRemocao = index
+                    this.exibirModalRemocao = true
                 }
             }
         })
