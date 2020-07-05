@@ -22,7 +22,7 @@
             <b-card class="mb-5" title="Formulário">
                 <form>
                     <b-row align-v="center">
-                        <b-col cols="4">
+                        <b-col cols="12" md="6" lg="4">
                             <b-form-group label="Nome" label-for="nome">
                                 <b-form-input id="nome" v-model="convidado.nome" type="text"
                                     placeholder="Ex: Jão da Silva" required>
@@ -30,7 +30,7 @@
                             </b-form-group>
                         </b-col>
 
-                        <b-col cols="4">
+                        <b-col cols="12" md="6" lg="4">
                             <b-form-group label="Idade" label-for="idade">
                                 <b-form-input id="idade" v-model="convidado.idade" type="number" placeholder="Ex: 20"
                                     required>
@@ -38,14 +38,14 @@
                             </b-form-group>
                         </b-col>
 
-                        <b-col cols="4">
+                        <b-col cols="12" md="6" lg="4">
                             <b-form-group label="Email" label-for="email">
                                 <b-form-input id="email" v-model="convidado.email" type="email"
                                     placeholder="Ex: jao@gmail.com" required></b-form-input>
                             </b-form-group>
                         </b-col>
 
-                        <b-col cols="4">
+                        <b-col cols="12" md="6" lg="4">
                             <b-form-group label="CEP" label-for="cep">
                                 <b-form-input v-mask="'##.###-###'" id="cep" v-model="convidado.endereco.cep"
                                     type="text" placeholder="Ex: 79060231" required></b-form-input>
@@ -55,6 +55,9 @@
                     </b-row>
                     <b-row align-h="end">
                         <b-col cols="auto">
+                            <b-button variant="outline-danger" @click="limpar">Cancelar</b-button>
+                        </b-col>
+                        <b-col cols="auto">
                             <b-button variant="primary" @click="salvar">Salvar</b-button>
                         </b-col>
                     </b-row>
@@ -62,23 +65,23 @@
             </b-card>
 
             <b-card>
-                
+
                 <b-row>
-                    <b-col cols="6">
+                    <b-col cols="12" md="6">
                         <b-form-group>
                             <b-form-input v-model="textoBusca" type="text" placeholder="Buscar por nome"></b-form-input>
                         </b-form-group>
                     </b-col>
-    
+
                     <b-col cols="auto">
-                        <b-button variant="primary" @click="buscar">Buscar</b-button> {{textoBusca}}
+                        <b-button variant="primary" @click="buscar">Buscar</b-button>
                     </b-col>
                 </b-row>
 
                 <b-table striped :items="listaConvidados" :fields="campos">
                     <template v-slot:cell(acoes)="row">
                         <b-btn variant="outline-primary" @click="editar(row.index)">Editar</b-btn>
-                        <b-btn variant="outline-danger" @click="confirmarRemocao(row.index)">Remover</b-btn>
+                        <b-btn variant="outline-danger" @click="confirmarRemocao(row.item)">Remover</b-btn>
                     </template>
                 </b-table>
             </b-card>
@@ -115,7 +118,7 @@
                 exibirModalRemocao: false,
                 titulo: "Lista de Convidados",
                 indiceEdicao: -1,
-                indiceRemocao: -1,
+                convidadoRemocao: {},
                 convidados: [],
                 listaConvidados: [],
                 convidado: { endereco: {} },
@@ -176,16 +179,27 @@
                     this.indiceEdicao = index
                 },
                 remover() {
-                    this.listaConvidados.splice(this.indiceRemocao, 1)
+                    //buscar o elemento no vetor convidados pelo e-mail
+                    let indice = this.convidados.findIndex((elemento) => {
+                        return elemento.email === this.convidadoRemocao.email
+                    })
+
+                    this.convidados.splice(indice, 1)
                     this.exibirModalRemocao = false
                 },
-                confirmarRemocao(index) {
-                    this.indiceRemocao = index
+                confirmarRemocao(convidado) {
+                    this.convidadoRemocao = convidado
                     this.exibirModalRemocao = true
                 },
                 validar() {
 
                     this.erros = []
+
+                    // verificar se o email já está cadastrado (faz uma filtragem)
+
+                    let indice = this.convidados.findIndex((elemento)=>{
+                        return elemento.email === this.convidado.email
+                    })
 
                     if (!this.convidado.nome) {
                         this.erros.push("O nome é obrigatório")
@@ -202,10 +216,14 @@
                     if (!this.convidado.endereco.cep) {
                         this.erros.push("O CEP é obrigatório")
                     }
+
+                    if(indice > -1){
+                        this.erros.push("Este convidado já foi cadastrado!")
+                    }
                 },
                 buscar() {
                     this.listaConvidados = this.convidados.filter((elemento) => {
-                        return elemento.nome.toLowerCase().includes(this.textoBusca)
+                        return elemento.nome.toLowerCase().includes(this.textoBusca.toLowerCase())
                     })
                 }
             }
