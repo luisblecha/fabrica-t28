@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Garçon e a Comanda</title>
+</head>
+
+<body>
+
+    <button onclick="almocar()">Almoçar</button>
+
+    <script>
+        async function almocar() {
+
+            console.log("Indo almoçar...")
+            console.log("Pedindo o meu prato...")
+
+            try {
+                let prato = await pedirPrato('Bifão à parmegiana')
+                console.log(`Comendo o prato: ${prato}`)
+            } catch(erro) {
+                console.log(`Deu ruim: ${erro}`)
+            }
+
+            console.log("Banheiro...")
+        }
+
+        function pedirPrato(nomePrato) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // reject('Deu ruim na cozinha')
+                    resolve(`${nomePrato}`)
+                }, 3000)
+            })
+        }
+
+    </script>
+</body>
+
+</html>
